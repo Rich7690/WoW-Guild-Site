@@ -212,9 +212,11 @@ angular.module('wowguildsite')
         // Load cached results
         const cachedGuilds = get('Guilds');
         const cachedGuild = get('SelectedGuild');
+        const cachedSummary = get("Summary");
 
         $scope.guilds = (cachedGuilds || [{default: true, display: "Choose a guild"}]);
         $scope.data.selectedGuild = (cachedGuild || $scope.guilds[0]);
+        $scope.tracked = (cachedSummary || []);
 
         const getCharacters = () => {
             $scope.loaded = false;
@@ -247,7 +249,6 @@ angular.module('wowguildsite')
 
         $scope.guildChange = () => {
             $scope.error = undefined;
-            $scope.tracked = [];
             const guild = $scope.data.selectedGuild;
             set("SelectedGuild", guild);
             if (!guild || guild.default) {
@@ -262,11 +263,13 @@ angular.module('wowguildsite')
                 $scope.tracked = response.data.audit.audits;
                 $scope.tablesLoaded = true;
                 $scope.tablesLoading = false;
-                itemCache.set($scope.tracked)
+                itemCache.set($scope.tracked);
+                set("Summary", $scope.tracked);
 
             }, function (error, itemCache) {
                 if (error.status === 304) {
                     $scope.tracked = itemCache.get();
+                    set("Summary", itemCache.get());
                     return;
                 }
                 $scope.tracked = [];
