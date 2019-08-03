@@ -1,0 +1,116 @@
+<div ng-cloak>
+
+    <div ng-show="error" class="alert alert-danger" role="alert" ng-cloak>
+        {{error}}
+    </div>
+
+    <div ng-show="message" class="alert alert-success" role="alert" ng-cloak>
+        {{message}}
+    </div>
+
+    <div>
+        <div ng-hide="loaded" ng-coak>Loading...</div>
+        <form>
+        <div class="form-row">
+            <div class="col-md-auto">
+                <div class="form-group">
+                    <select required class="form-control" id="guildSelect" ng-change="guildChange()" placeholder="Select a guild"
+                            ng-model="data.selectedGuild"
+                            ng-options="item.display for item in guilds track by item.display">
+                    </select>
+                </div>
+            </div>
+        </div>
+        </form>
+
+        <span ng-show="tablesLoading">Loading...</span>
+        <div class="row" ng-show="tablesLoaded && tracked.length > 0">
+            <div class="col-md">
+                <br>
+                <div>Total: {{tracked.length}}</div>
+            </div>
+        </div>
+        <div class="row" ng-show="tablesLoaded && tracked.length > 0">
+            <div class="col-md-auto">
+
+                <div ng-show="tracked">
+                    <table id="members" class="table table-striped" style="width: 100%">
+                        <thead>
+                        <tr scope="row">
+
+                            <th>Name</th>
+                            <th>Item Level</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" ng-repeat="member in tracked | orderBy: '-itemLevelEquippedFull'">
+                            <td>{{member.name}}</td>
+                            <td>{{member.itemLevelEquipped}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-auto">
+                <div ng-show="tracked">
+                    <table class="table table-striped" style="width: 100%">
+                        <thead>
+                        <tr scope="row">
+                            <th>Name</th>
+                            <th>Neck</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" ng-repeat="member in tracked | orderBy:'-necklvlFull'">
+                            <td>{{member.name}}</td>
+                            <td>{{member.necklvl}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-auto">
+                <div ng-show="tracked">
+                    <table class="table table-striped" style="width: 100%">
+                        <thead>
+                        <tr scope="row">
+                            <th>Name</th>
+                            <th>Highest M+</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" ng-repeat="member in tracked | orderBy:'-weeklyHighestMythic'">
+                            <td>{{member.name}}</td>
+                            <td>{{member.weeklyHighestMythic}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-auto">
+
+                <div ng-show="tracked">
+                    <table class="table table-striped" style="width: 100%">
+                        <thead>
+                        <tr scope="row">
+                            <th>Name</th>
+                            <th>Islands</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" ng-repeat="member in tracked | orderBy: '-ieWeekly'">
+                            <td>{{member.name}}</td>
+                            <td>{{(member.ieWeekly ? 'Yes' : 'No')}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

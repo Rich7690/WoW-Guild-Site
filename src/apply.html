@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" ng-app="wowguildsite">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Winter's Revival</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+</head>
+<body>
+<h1 style="text-align: center">Apply to Winter's Revival</h1>
+
+<div class="container" ng-controller="MainController as mainCtl">
+    <div ng-show="mainCtl.error" class="alert alert-danger" role="alert" ng-cloak>
+        {{mainCtl.error}}
+    </div>
+
+    <div ng-show="mainCtl.message" class="alert alert-success" role="alert" ng-cloak>
+        {{mainCtl.message}}
+    </div>
+
+    <div ng-show="!mainCtl.battletag" ng-cloak>
+        <p>In order to apply to the guild, we ask that you sign in with Battle.net. Note that this will direct you to login to your Battle.net
+        account. Our site never requests nor has access to any of your login information. It only allows us to gather information about
+            your WoW characters on your behalf.</p>
+        <a class="btn btn-primary" href="api/auth/bnet">Login With Battle.net</a>
+    </div>
+
+    <span ng-show="mainCtl.battletag" ng-cloak>Logged in as {{mainCtl.battletag}}</span>
+    <div ng-show="mainCtl.battletag" ng-cloak>
+        Available max level characters:
+        <p ng-hide="mainCtl.toons">Loading...</p>
+        <ul ng-show="mainCtl.toons">
+            <li ng-repeat="item in mainCtl.characters | filter: { level: '120'}">{{item.name}} - {{item.level}} -
+                {{item.realm}}
+            </li>
+        </ul>
+    </div>
+
+    <br>
+    <form ng-show="mainCtl.battletag" ng-submit="mainCtl.submit($event)" promise-btn>
+        <div class="form-group">
+            <label for="toonSelect">Select your Character</label>
+            <select required class="form-control" id="toonSelect" ng-change="mainCtl.toonChange()"
+                    ng-model="mainCtl.data.selectedToon"
+                    ng-options="item.name for item in mainCtl.characters | filter: { level: '120'}">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="specs">Select specs applying for</label>
+            <select required multiple ng-model="mainCtl.data.selectedSpecs" class="form-control" id="specs"
+                    ng-options="spec as spec.name for spec in mainCtl.specs">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Enter a brief summary of your raiding experience</label>
+            <input required ng-model="mainCtl.data.description" type="text" class="form-control" id="exampleInputEmail1"
+                   placeholder="Enter description">
+        </div>
+        <div class="form-group">
+            <label for="discordName">Please enter your full discord username so we may reach out to you about your application (i.e thrall#1234)</label>
+            <input required ng-model="mainCtl.data.discordName" type="text" class="form-control" id="discordName"
+                   placeholder="Enter discord name">
+        </div>
+        <button type="submit" class="btn btn-primary" >Submit</button>
+    </form>
+
+
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<!-- inject:js -->
+<!-- endinject -->
+
+</body>
+</html>

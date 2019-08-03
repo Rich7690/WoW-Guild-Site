@@ -1,0 +1,66 @@
+<div ng-cloak>
+
+    <div ng-show="error" class="alert alert-danger" role="alert" ng-cloak>
+        {{error}}
+    </div>
+
+    <div ng-show="message" class="alert alert-success" role="alert" ng-cloak>
+        {{message}}
+    </div>
+
+    <div>
+        <div ng-hide="loaded" ng-coak>Loading...</div>
+        <div class="row">
+            <div class="col-md-auto">
+                <div class="form-group">
+                    <label for="guildSelect">Select your Guild</label>
+                    <select required class="form-control" id="guildSelect" ng-change="guildChange()"
+                            ng-model="data.selectedGuild"
+                            ng-options="item.display for item in guilds track by item.display">
+                    </select>
+                </div>
+
+                <btn class="btn btn-primary" ng-click="refresh()" promise-btn>Import new guild members from
+                    Battle.net
+                </btn>
+            </div>
+        </div>
+
+        <span ng-show="tablesLoading">Loading...</span>
+        <div class="row">
+            <div class="col-md">
+                <br>
+                <h3>All Members</h3>
+                <div>Total: {{untracked.length}}</div>
+                <div ng-show="untracked">
+                    <table id="untracked" class="table table-striped" style="width: 100%">
+                        <thead>
+                        <tr scope="row">
+                            <th>Name</th>
+                            <th>Level</th>
+                            <th>Class</th>
+                            <th>Rank</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" ng-repeat="member in untracked | orderBy:'name'">
+                            <td>{{member.name}}</td>
+                            <td>{{member.level}}</td>
+                            <td>{{classes[member.class]}}</td>
+                            <td>{{member.rank}}</td>
+                            <td>
+                                <btn class="btn btn-success" ng-show="member.auditStatus === 'INACTIVE'" ng-click="activate(member)" promise-btn>Activate</btn>
+                                <btn class="btn btn-danger" ng-show="member.auditStatus === 'ACTIVE'" ng-click="deactivate(member)" promise-btn>Deactivate</btn>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
