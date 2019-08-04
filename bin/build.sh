@@ -10,6 +10,14 @@ if test -f "$DEPLOY_PROD"; then
     exit 0
 fi
 
+DEPLOY_BETA=./dist/deploy-beta
+if test -f "$DEPLOY_BETA"; then
+    echo "Deploying to beta"
+    npm run publish-beta
+    touch ./dist/deploy-prod
+    exit 0
+fi
+
 npm install
 npm run gulp
-touch ./dist/deploy-prod
+touch ./dist/deploy-beta

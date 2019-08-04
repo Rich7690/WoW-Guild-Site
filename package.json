@@ -8,11 +8,13 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && webpack --config webpack.prod.config.js",
+    "build": "rm -rf dist && tsc",
     "gulp": "gulp clean && gulp",
     "webpack": "webpack",
     "start": "npm run serve",
-    "start:dev": "webpack-dev-server --config webpack.dev.config.js",
+    "start:dev": "gulp dev",
+    "publish-beta": "aws s3 sync ./dist s3://wow-guild-site-beta --exclude \"*.html\" --delete --cache-control \"max-age=31557600, public,immutable\" && npm run publish-html-beta",
+    "publish-html-beta": "aws s3 cp ./dist/ s3://wow-guild-site-beta --exclude \"*\" --include \"*.html\" --recursive --cache-control \"no-cache, no-store, must-revalidate\"",
     "publish": "aws s3 sync ./dist s3://wow-guild-site-production --exclude \"*.html\" --delete --cache-control \"max-age=31557600, public,immutable\" && npm run publish-html",
     "publish-html": "aws s3 cp ./dist/ s3://wow-guild-site-production --exclude \"*\" --include \"*.html\" --recursive --cache-control \"max-age=3600, public, must-revalidate\"",
     "build-publish": "npm run gulp && npm run publish"
@@ -21,6 +23,8 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.5.5",
+    "@types/angular": "^1.6.55",
+    "@types/jquery": "^3.3.30",
     "babel-preset-es2015": "^6.24.1",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.4",
@@ -43,6 +47,9 @@
     "mini-css-extract-plugin": "^0.7.0",
     "rimraf": "^2.6.3",
     "style-loader": "^0.23.1",
+    "ts-node": "^8.3.0",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.5.3",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2"
@@ -53,6 +60,7 @@
     "angular-local-storage": "^0.7.1",
     "angular-promise-buttons": "^0.1.23",
     "angular-route": "^1.7.8",
+    "jquery": "^3.4.1",
     "local-storage": "^2.0.0"
   }
 }
