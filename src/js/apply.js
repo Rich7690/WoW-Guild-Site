@@ -53,7 +53,7 @@ angular.module('wowguildsite', ['angularPromiseButtons', 'ngRoute', 'http-etag']
     mainCtl.toonChange = function () {
       mainCtl.specs = [];
       if (mainCtl.data.selectedToon) {
-        mainCtl.spec = mainCtl.data.selectedToon.spec.name;
+        mainCtl.spec = mainCtl.data.selectedToon.spec ? mainCtl.data.selectedToon.spec.name : [];
 
         const clazz = mainCtl.data.selectedToon.class;
 
