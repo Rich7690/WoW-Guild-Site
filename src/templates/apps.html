@@ -1,0 +1,131 @@
+<div ng-cloak>
+
+    <div ng-show="error" class="alert alert-danger" role="alert" ng-cloak>
+        {{error}}
+    </div>
+
+    <div ng-show="message" class="alert alert-success" role="alert" ng-cloak>
+        {{message}}
+    </div>
+
+    <div ng-hide="loaded">Loading...</div>
+    <div ng-show="loaded">
+        <div class="row">
+            <div class="col-md">
+                <br>
+                <h3>New Applications</h3>
+                <div ng-show="apps">
+                    <table id="untracked" class="table table-striped" style="width: 100%">
+                        <thead>
+                        <tr scope="row">
+                            <th>Character Name</th>
+                            <th>Realm</th>
+                            <th>Class</th>
+                            <th>Specs</th>
+                            <th>BattleTag</th>
+                            <th>Discord Name</th>
+                            <th>Raiding XP</th>
+                            <th>Actions</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" ng-repeat="(key,app) in apps">
+                            <td>{{app.toonName}}</td>
+                            <td>{{app.toonRealm}}</td>
+                            <td>{{classes[app.selectedToon.class]}}</td>
+                            <td><span style="padding-right: 10px" ng-repeat="spec in app.selectedSpecs">{{spec.name}}</span></td>
+                            <td>{{app.battleTag}}</td>
+                            <td>{{app.discordName}}</td>
+                            <td>{{app.description}}</td>
+                            <td><div class="btn-group">
+                                <btn class="btn btn-success" ng-click="updateStatus(app, 'ACCEPTED')" promise-btn>Accept</btn>
+                                <btn class="btn btn-danger" ng-click="updateStatus(app, 'REJECTED')" promise-btn>Reject</btn>
+                            </div>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <br>
+                <h3>Accepted Applications</h3>
+                <div ng-show="accepted">
+                    <table id="all-apps" class="table table-striped" style="width: 100%">
+                        <thead>
+                        <tr scope="row">
+                            <th>Character Name</th>
+                            <th>Realm</th>
+                            <th>Class</th>
+                            <th>Specs</th>
+                            <th>BattleTag</th>
+                            <th>Discord Name</th>
+                            <th>Raiding XP</th>
+                            <th>Actions</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" ng-repeat="(key,app)  in accepted">
+                            <td>{{app.toonName}}</td>
+                            <td>{{app.toonRealm}}</td>
+                            <td>{{classes[app.selectedToon.class]}}</td>
+                            <td><span style="padding-right: 10px" ng-repeat="spec in app.selectedSpecs">{{spec.name}}</span></td>
+                            <td>{{app.battleTag}}</td>
+                            <td>{{app.discordName}}</td>
+                            <td>{{app.description}}</td>
+                            <td><div class="btn-group">
+                                <btn class="btn btn-danger" ng-click="updateStatus(app, 'REJECTED')" promise-btn ng-disabled="all">Reject</btn>
+                            </div>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <br>
+                <h3>Rejected Applications</h3>
+                <div ng-show="rejected">
+                    <table id="rejected-apps" class="table table-striped" style="width: 100%">
+                        <thead>
+                        <tr scope="row">
+                            <th>Character Name</th>
+                            <th>Realm</th>
+                            <th>Class</th>
+                            <th>Specs</th>
+                            <th>BattleTag</th>
+                            <th>Discord Name</th>
+                            <th>Raiding XP</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" ng-repeat="(key,app) in rejected">
+                            <td>{{app.toonName}}</td>
+                            <td>{{app.toonRealm}}</td>
+                            <td>{{classes[app.selectedToon.class]}}</td>
+                            <td><span style="padding-right: 10px" ng-repeat="spec in app.selectedSpecs">{{spec.name}}</span></td>
+                            <td>{{app.battleTag}}</td>
+                            <td>{{app.discordName}}</td>
+                            <td>{{app.description}}</td>
+                            <td><div class="btn-group">
+                                <btn class="btn btn-success" ng-click="updateStatus(app, 'ACCEPTED')" promise-btn>Accept</btn>
+                            </div>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

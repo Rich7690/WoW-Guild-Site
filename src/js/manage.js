@@ -296,4 +296,90 @@ angular.module('wowguildsite')
         if (cachedGuild) {
             $scope.guildChange();
         }
+    }])
+    .controller('AppsController', ['$http', '$scope', "$routeParams", function ($http, $scope, $routeParams) {
+        console.log("apps!");
+        $scope.loaded = false;
+        $scope.apps = {};
+        $scope.accepted = {};
+        $scope.rejected = {};
+        $scope.classes = {};
+
+        const getClasses = () => {
+            return $http.get(`api/get-classes`).then((response) => {
+                const classes = response.data.classes.classes;
+                const map = {};
+                for (const clazz of classes) {
+                    map[clazz.id] = clazz.name;
+                }
+                $scope.classes = map;
+
+            }, function (error) {
+                $scope.classes = {};
+                if (error.status === 400) {
+                    $scope.error = error.data.error
+                } else {
+                    $scope.error = 'Failed to load classes';
+                    console.error(error);
+                }
+            });
+        };
+
+        getClasses();
+
+        const getApps = function(status, param) {
+            const query = status ? `?status=${status}` : "";
+            return $http.get(`api/apps${query}`).then(function (response) {
+
+                const result = response.data.apps.reduce(function(map, obj) {
+                    map[obj.key] = obj;
+                    return map;
+                }, {});
+                $scope[param] = result;
+                $scope.loaded = true
+            }, function (error) {
+                $scope.loaded = true;
+                if (error.status === 400) {
+                    $scope.error = error.data.error;
+                } else {
+                    console.error(error);
+                    $scope.error = `Failed to load ${param ? param : ''} applications`;
+                }
+            });
+        };
+
+        getApps("CREATED", 'apps');
+        getApps("ACCEPTED", 'accepted');
+        getApps("REJECTED", 'rejected');
+
+        $scope.updateStatus = function (app, status) {
+            app.status = status;
+            return $http.post(`api/apps/${app.key}`, {
+                app: app
+            }).then((response) => {
+                switch (status) {
+                    case "REJECTED":
+                        delete $scope.accepted[app.key];
+                        delete $scope.apps[app.key];
+                        $scope.rejected[app.key] = app;
+                        $scope.message = "Successfully rejected application";
+                        break;
+                    case "ACCEPTED":
+                        delete $scope.rejected[app.key];
+                        delete $scope.apps[app.key];
+                        $scope.accepted[app.key] = app;
+                        $scope.message = "Successfully accepted application";
+                        break;
+                }
+            }, function (error) {
+
+                if (error.status === 400) {
+                    $scope.error = error.data.error
+                } else {
+                    $scope.error = 'Failed to update application';
+                    console.error(error);
+                }
+            });
+        }
+
     }]);

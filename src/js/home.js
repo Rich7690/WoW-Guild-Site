@@ -51,6 +51,10 @@ angular.module('wowguildsite')
                 templateUrl: 'templates/summary.html',
                 controller: 'SummaryController'
             })
+            .when('/apps', {
+                templateUrl: 'templates/apps.html',
+                controller: 'AppsController'
+            })
             .otherwise({
                 templateUrl: 'templates/main.html'
             });
