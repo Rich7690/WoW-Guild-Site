@@ -111,7 +111,7 @@ angular.module('wowguildsite')
                 if (error.status === 400) {
                     $scope.error = error.data.error
                 }
-                else if(error.status === 403) {
+                else if(error.status === 401) {
                     $scope.error = "You must be a GM or officer of the guild in order to manage it.";
                 }
                 else {
@@ -278,9 +278,6 @@ angular.module('wowguildsite')
                 $scope.tablesLoading = false;
                 if (error.status === 400) {
                     $scope.error = error.data.error
-                }
-                else if (error.status === 404) {
-                    $scope.error = "This guild does not have an audit summary";
                 }
                 else {
                     $scope.error = 'Failed to load guild members';
