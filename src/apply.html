@@ -14,118 +14,12 @@
 </head>
 <body ng-controller="MainController as mainCtl">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto" ng-cloak>
-            <li class="nav-item">
-                <a ng-class="mainCtl.applyNavClass" ng-click="mainCtl.changePage('apply', true)">Apply</a>
-            </li>
-            <li class="nav-item">
-                <a ng-class="mainCtl.appNavClass" ng-click="mainCtl.changePage('apps', true)">Applications</a>
-            </li>
-
-            <li class="nav-item float-right" ng-show="mainCtl.battletag" ng-cloak>
-                <span class="nav-link float-right" ng-show="mainCtl.battletag">{{mainCtl.battletag}}</span>
-            </li>
-        </ul>
-    </div>
-</nav>
 <div class="container">
 
-    <h1 style="text-align: center; padding-top: 2px;">Apply to Winter's Revival</h1>
-    <div ng-show="mainCtl.error" class="alert alert-danger" role="alert" ng-cloak>
-        {{mainCtl.error}}
-    </div>
-
-    <div ng-show="mainCtl.message" class="alert alert-success" role="alert" ng-cloak>
-        {{mainCtl.message}}
-    </div>
-    <span ng-hide="mainCtl.loaded && (!mainCtl.battletag || mainCtl.page)">Loading...</span>
-    <div ng-show="mainCtl.loaded">
-        <div ng-show="!mainCtl.battletag" ng-cloak>
-            <p>In order to apply to the guild, we ask that you sign in with Battle.net. Note that this will direct you
-                to login to your Battle.net
-                account. Our site never requests nor has access to any of your login information. It only allows us to
-                gather information about
-                your WoW characters on your behalf.</p>
-            <a class="btn btn-primary" href="api/auth/bnet">Login With Battle.net</a>
-        </div>
-
-        <div ng-show="mainCtl.battletag && mainCtl.page === 'apps'" ng-cloak>
-            <h3>Current Applications</h3>
-            <span ng-hide="mainCtl.appsLoaded">Loading applications...</span>
-            <div ng-show="mainCtl.apps && mainCtl.appsLoaded">
-                <table id="untracked" class="table table-striped" style="width: 100%">
-                    <thead>
-                    <tr scope="row">
-                        <th>Character Name</th>
-                        <th>Realm</th>
-                        <th>Status</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr scope="row" ng-repeat="app in mainCtl.apps">
-                        <td>{{app.toonName}}</td>
-                        <td>{{app.toonRealm}}</td>
-                        <td>{{mainCtl.statusMap[app.status] ? mainCtl.statusMap[app.status] : app.status}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div ng-show="mainCtl.battletag && mainCtl.page === 'apply'" ng-cloak>
-            <div>
-                Available max level characters:
-                <p ng-hide="mainCtl.toons">Loading...</p>
-                <ul ng-show="mainCtl.toons">
-                    <li ng-repeat="item in mainCtl.characters | filter: { level: '120'}">{{item.name}} -
-                        {{item.level}} -
-                        {{item.realm}}
-                    </li>
-                </ul>
-            </div>
-
-            <br>
-            <form ng-submit="mainCtl.submit($event)" promise-btn>
-                <div class="form-group">
-                    <label for="toonSelect">Select your Character</label>
-                    <select required class="form-control" id="toonSelect" ng-change="mainCtl.toonChange()"
-                            ng-model="mainCtl.data.selectedToon"
-                            ng-options="item.name for item in mainCtl.characters | filter: { level: '120'}">
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="specs">Select specs applying for</label>
-                    <select required multiple ng-model="mainCtl.data.selectedSpecs" class="form-control" id="specs"
-                            ng-options="spec as spec.name for spec in mainCtl.specs">
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Enter a brief summary of your raiding experience</label>
-                    <input required ng-model="mainCtl.data.description" type="text" class="form-control"
-                           id="exampleInputEmail1"
-                           placeholder="Enter description">
-                </div>
-                <div class="form-group">
-                    <label for="discordName">Please enter your full discord username so we may reach out to you
-                        about your application (i.e thrall#1234)</label>
-                    <input required ng-model="mainCtl.data.discordName" type="text" class="form-control"
-                           id="discordName"
-                           placeholder="Enter discord name">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-
-    </div>
+    <h3 style="text-align: center; padding-top: 2px;">Winter's Revival is no longer taking applications at this time</h3>
 
 
+</div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
