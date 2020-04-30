@@ -60,7 +60,7 @@
     "angular-local-storage": "^0.7.1",
     "angular-promise-buttons": "^0.1.23",
     "angular-route": "^1.7.8",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "local-storage": "^2.0.0"
   }
 }
