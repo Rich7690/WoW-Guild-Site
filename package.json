@@ -55,7 +55,7 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
-    "angular": "^1.7.9",
+    "angular": "^1.8.0",
     "angular-http-etag": "^2.0.18",
     "angular-local-storage": "^0.7.1",
     "angular-promise-buttons": "^0.1.23",
